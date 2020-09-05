@@ -1,8 +1,12 @@
 # mini_tetrominos
 for ML
 
-C++ Files
-Support
-GameField
-Tetris Block Factory
-GameManager
+Welcome To Mini-Tetrominos Project
+
+Tetromino consists of
+
+I, O, J, L, S, Z, T
+
+Blocks
+
+Test With Test.cpp
