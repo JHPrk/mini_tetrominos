@@ -16,16 +16,16 @@ protected:
 	int size;
 };
 
-class TetrisBlock {
+class TetrominoBlock {
 
 public:
-	TetrisBlock(int size)
+	TetrominoBlock(int size)
 	{
 		this->size = size;
 		blockField = new SameGrid(size);
 		centerPoint = new Point(size/2, size/2);
 	}
-	~TetrisBlock()
+	~TetrominoBlock()
 	{
 		delete blockField;
 		delete centerPoint;
@@ -33,6 +33,10 @@ public:
 	void rotate()
 	{
 		blockField->rotate90Degrees();
+	}
+	void unrotate()
+	{
+		blockField->rotateMinus90Degrees();
 	}
 	Grid* getField()
 	{
@@ -47,6 +51,14 @@ public:
 	{
 		return centerPoint;
 	}
+	int getSize()
+	{
+		return size;
+	}
+	bool checkFill(int x,int y)
+	{
+		return blockField->getFieldValue(x, y);
+	}
 
 protected:
 
@@ -55,9 +67,9 @@ protected:
 	Point* centerPoint;
 };
 
-class I_Block : public TetrisBlock {
+class I_Block : public TetrominoBlock {
 public: 
-	I_Block() : TetrisBlock(4)
+	I_Block() : TetrominoBlock(4)
 	{
 		for (int i = 0; i < size; i++)
 		{
@@ -70,9 +82,9 @@ public:
 	}
 };
 
-class O_Block : public TetrisBlock {
+class O_Block : public TetrominoBlock {
 public:
-	O_Block() : TetrisBlock(2)
+	O_Block() : TetrominoBlock(2)
 	{
 		for (int i = 0; i < size; i++)
 		{
@@ -86,9 +98,9 @@ public:
 	}
 };
 
-class J_Block : public TetrisBlock {
+class J_Block : public TetrominoBlock {
 public:
-	J_Block() : TetrisBlock(3)
+	J_Block() : TetrominoBlock(3)
 	{
 		blockField->setFieldValue(0, 2, true);
 		for (int i = 0; i < size; i++)
@@ -102,9 +114,9 @@ public:
 	}
 };
 
-class L_Block : public TetrisBlock {
+class L_Block : public TetrominoBlock {
 public:
-	L_Block() : TetrisBlock(3)
+	L_Block() : TetrominoBlock(3)
 	{
 		blockField->setFieldValue(0, 0, true);
 		for (int i = 0; i < size; i++)
@@ -119,9 +131,9 @@ public:
 
 };
 
-class S_Block : public TetrisBlock {
+class S_Block : public TetrominoBlock {
 public:
-	S_Block() : TetrisBlock(3)
+	S_Block() : TetrominoBlock(3)
 	{
 		for (int i = 0; i < 2; i++)
 		{
@@ -136,9 +148,9 @@ public:
 
 };
 
-class Z_Block : public TetrisBlock {
+class Z_Block : public TetrominoBlock {
 public:
-	Z_Block() : TetrisBlock(3)
+	Z_Block() : TetrominoBlock(3)
 	{
 		for (int i = 0; i < 2; i++)
 		{
@@ -154,9 +166,9 @@ public:
 };
 
 
-class T_Block : public TetrisBlock {
+class T_Block : public TetrominoBlock {
 public:
-	T_Block() : TetrisBlock(3)
+	T_Block() : TetrominoBlock(3)
 	{
 		blockField->setFieldValue(0, 1, true);
 		for (int i = 0; i < size; i++)
@@ -171,9 +183,9 @@ public:
 
 };
 
-class BlockFactory {
+class TetrominoFactory {
 public :
-	TetrisBlock* createTetrisBlock(int type)
+	static TetrominoBlock* createTetrominoBlock(int type)
 	{
 		switch (type) 
 		{

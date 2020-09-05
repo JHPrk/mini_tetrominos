@@ -28,29 +28,35 @@ public:
 	{
 		return gridField;
 	}
-	bool getFieldValue(int x, int y)
+	bool getFieldValue(int i, int j)
 	{
-		return gridField[x][y];
+		return gridField[i][j];
 	}
-	void setFieldValue(int x, int y, bool value)
+	void setFieldValue(int i, int j, bool value)
 	{
-		gridField[x][y] = value;
+		gridField[i][j] = value;
 	}
 	string toString()
 	{
 		string str = "";
+		for (int i = 0; i < width; i++)
+		{
+			str += "-----";
+		}
 		for (int i = 0; i < height; i++)
 		{
-			if (i > 0)
-			{
-				str += "\n";
-			}
+			str += "\n";
 			str += "| ";
 			for (int j = 0; j < width; j++)
 			{
 				str += (gridField[i][j] ? "1" : "0");
 				str += " | ";
 			}
+		}
+		str += "\n";
+		for (int i = 0; i < width; i++)
+		{
+			str += "-----";
 		}
 		return str;
 	}
@@ -82,6 +88,12 @@ public :
 			for (int j = 0; j<(size + 1) / 2; j++)
 				cyclic_roll(gridField[i][j], gridField[size - 1 - j][i], gridField[size - 1 - i][size - 1 - j], gridField[j][size - 1 - i]);
 	}
+	void rotateMinus90Degrees()
+	{
+		for (int i = 0; i < size / 2; i++)
+			for (int j = 0; j < (size + 1) / 2; j++)
+				uncyclic_roll(gridField[i][j], gridField[size - 1 - j][i], gridField[size - 1 - i][size - 1 - j], gridField[j][size - 1 - i]);
+	}
 private :
 
 	void cyclic_roll(bool &a, bool &b, bool &c, bool &d)
@@ -91,6 +103,14 @@ private :
 		b = c;
 		c = d;
 		d = temp;
+	}
+	void uncyclic_roll(bool& a, bool& b, bool& c, bool& d)
+	{
+		bool temp = d;
+		d = c;
+		c = b;
+		b = a;
+		a = temp;
 	}
 	int size;
 };
